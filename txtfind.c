@@ -101,35 +101,22 @@ void print_lines(char * str)
 }
 void print_similar_words(char *str)
 {
-    char line[LINE];
-    for (int i = 0; i < LINES; i++)
+  char word[WORD] = {0};
+    int index = 0;
+    while (index < LINES*WORD)
     {
-        get_line(line);
-        char *ptr_line;
-        if (feof(stdin))
+        get_word(word);
+        if(feof(stdin))
         {
             break;
         }
-        else
+        int flage = similar(word, str);
+        if (flage)
         {
-        // Split the line into a list of words
-            ptr_line = strtok(line, " ");
-
-        // Iterate through the list of words
-            while (ptr_line != NULL) {
-                if (*(ptr_line + (strlen(ptr_line)-1)) == '\n')
-                {
-                    *(ptr_line + (strlen(ptr_line)-1)) = '\0';
-                }
-                int flage = similar(ptr_line, str);
-                if (flage)
-                {
-                    printf("%s\n",ptr_line);
-                }
-                ptr_line = strtok(NULL, " ");
-                }
+            printf("%s\n",word);
         }
-}
+        index++;
+    }
 }
 
 int main()
